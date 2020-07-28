@@ -7,3 +7,5 @@ def get_status_ids(api, search_term, items):
         q= search_term, 
         ).items(items):
         status_ids.append(tweet.id)
+
+    return status_ids
