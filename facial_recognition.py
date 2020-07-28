@@ -1,5 +1,6 @@
 import cv2  as cv
 import os
+import time
 
 def tagFaces(directory):
     save_path = os.path.join(f"{os.getcwd()}", "Detected_Faces")
@@ -10,6 +11,7 @@ def tagFaces(directory):
         "C:\\Users\\JOE\\JOB\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_alt.xml"
 
     for filename in os.listdir(directory):
+        start_time = time.clock()
         original_image = cv.imread(os.path.join(directory, filename))
         grayscale_image = cv.cvtColor(original_image, cv.COLOR_BGR2GRAY)
         face_cascade = cv.CascadeClassifier(haar_cascade_path)
@@ -23,7 +25,9 @@ def tagFaces(directory):
                 (0, 255, 0),
                 2
             )
-        print(f"processed.....{filename} of {len(os.listdir(directory))}")
+        
         image_save_path = os.path.join(save_path, filename)
         cv.imwrite(image_save_path, original_image)
+        process_time = time.clock() - start_time
+        print(f"processed.....{filename} of {len(os.listdir(directory))} in {process_time:.3f} seconds")
     
